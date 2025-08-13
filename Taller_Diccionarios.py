@@ -23,16 +23,34 @@ def clr():
       
 def NuevaCuenta(): 
     global usuarios
-    CC = True
+    llave = len(usuarios)+1
     while True:
+        clr()
         print("Para crear una cuenta nueva, porfavor ingrese los siguientes datos")       
-        nomus=Nombre()
+        nomus=Nombre().upper()
         ccus=CC()
+        email=Email().upper()
+        edad=Edad()
+        contacto=Telefono()
+        ubi=Ubicacion()
+        nuevousr = {"Nombre":nomus,"CC":ccus,"EMAIL":email,"EDAD":edad,"CONTACTO":contacto,"UBICACION":ubi}
+        usuarios.update({llave+1:nuevousr})
+        op = input("Proceso Finalizado correctamente\nDesea crear una nueva cuenta?(S|N)").upper()
+        nuevaC = True
+        while nuevaC:
+            match op:
+                case "N":
+                    nuevaC = False
+                    continue
+                case "S":
+                    break
+                case _:
+                    input("Valor no soportado\nIngrese un valor valido")
         
        
 #Captar cc            
 def CC():
- 
+    clr()
     while True:
      cc = input("Dijite su numero de identificacion personal")
             
@@ -43,7 +61,7 @@ def CC():
 #Captar nombre            
 def Nombre():
     while True:
-        #Nombre
+        clr()
         nombre = input("Porfavor ingrese el nombre del titular de la cuenta")
         if nombre.isalpha():
             return nombre
@@ -52,6 +70,7 @@ def Nombre():
 #Captar email
 def Email():
     while True:
+        clr()
         email = input("Porfavor ingrese su email")
         if "@gmail.com" or "@hotmail.com" in email: 
             pass
@@ -60,15 +79,26 @@ def Email():
         if email in usuarios:
             input("Este email ya se encuentra registrado, intente con otro \nOprima una tecla para continuar")
         else:
-            return email           
+            return email  
+#Captar Edad
+def Edad():
+    while True:
+     clr()   
+     edad=int(input("Porfavor ingrese la edad del titular de la cuenta"))
+     if edad < 17:
+         print("lo sentimos no puede crear una cuenta para menores de edad")  
+     else:
+         return edad   
 #captar telefono
 def Telefono():
     while True:
+        clr()
         print("Ingrese una de las siguientes opciones para su telefono")
         op = input("""
                    1. Fijo
                    2. Celular
-                   3. Ninguno
+                   3. Ambos
+                   4. Ninguno
                    """)
         while True:
             match op:
@@ -85,14 +115,29 @@ def Telefono():
                     else:
                         input("El numero telefonico debe contener solo numeros y debe ser de 10 digitos")
                 case "3":
-                    input("Lo sentimos no puede crear una cuenta sin un numero añadido \n Oprima una tecla para continuar")
+                    input("Lo sentimos no puede crear una cuenta con ambos numeros elija unos solo \nOprima una tecla para continuar")
+                    return False
+                case "4":
+                    input("Lo sentimos no puede crear una cuenta sin un numero añadido \nOprima una tecla para continuar")
                     return False
                 case _: 
                     input("Elija una de las opciones validas porfavor \nOprima una tecla para continuar")
                     break   
 #Capta ubi
 def Ubicacion():
-                
+    while True:
+        clr()
+        ubicacion = {}
+        ubicacion.update({"Pais": input("Ingrese el pais en el que reside actualmente").upper()})
+        ubicacion.update({"Departamento": input("Ingrese su departamento de residencia").upper()}) 
+        ubicacion.update({"Ciudad": input("Ingrese su ciudad de residencia").upper()}) 
+        ubicacion.update({"Dia": input("Ingrese su direccion de residencia").upper()})
+        for i, val in ubicacion.items():
+            if val.isalpha() and not val.isdigit():
+                return ubicacion
+            else:
+                print(f"Error, el dato ingresado en {i} es incorrecto")
+
 def Depositar():
     pass
 def SolicitarProducto(): 
