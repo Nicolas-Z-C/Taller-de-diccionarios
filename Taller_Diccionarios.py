@@ -5,6 +5,7 @@ Descripcion:
 """
 #Importacion de modulos y librerias nesesarias 
 import  os 
+import time
 import random 
 
 #Iniciacion de las variables y diccionarios globales 
@@ -18,7 +19,9 @@ productosCliente = {}
 histMov = {}
 
 #Definicion de las funciones que se van a usar junto a los menus
-def NuevaCuenta():
+def clr():
+    pass 
+def NuevaCuenta():        
     pass 
 def Depositar():
     pass
@@ -31,8 +34,25 @@ def Saldopendiente():
 def EliminarCuenta():
     pass 
 def MenuInicio():
-    pass
+    print("Elija una de las siguientes opciones porfavor")
+    opcion = str(input("""
+                        1. Crear nueva cuenta 
+                        2. Depositar dinero 
+                        3. Retirar dinero
+                        4. Solicitar credito 
+                        5. Pago cuota credito 
+                        6. Eliminar cuenta
+                        7. Salir
+                         """))
+    return opcion
+
 def MenuProductos():
     pass
 
 #Maquetacion de los menus que se van a formar
+
+print("Bienvenido al programa del sistema bancario")
+time.sleep(1)
+
+while True: 
+    op = MenuInicio()
