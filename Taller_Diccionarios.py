@@ -10,12 +10,13 @@ import random
 
 #Iniciacion de las variables y diccionarios globales 
 #Debe contener dos subdiccionarios, uno de contacto y otro de direcciones 
-usuarios= {}
-productosDisp= {}
+usuarios={}
+productosDisp={}
+cuentasClientes={}
 #Es un subdiccionario por cada uno de los productos
-productosClientes= {}
+productosClientes={}
 #Historial de los movimientos de las cuentas 
-histMov= {}
+histMov={}
 
 #Definicion de las funciones que se van a usar junto a los menus
 def clr():
@@ -23,6 +24,7 @@ def clr():
       
 def NuevaCuenta(): 
     global usuarios
+    global cuentasClientes
     llave = len(usuarios)+1
     while True:
         clr()
@@ -33,7 +35,9 @@ def NuevaCuenta():
         edad=Edad()
         contacto=Telefono()
         ubi=Ubicacion()
+        tipoCuenta = CuentaPlata()
         nuevousr = {"Nombre":nomus,"CC":ccus,"EMAIL":email,"EDAD":edad,"CONTACTO":contacto,"UBICACION":ubi}
+        cuentasClientes.update({ccus:tipoCuenta})  
         usuarios.update({llave+1:nuevousr})
         op = input("Proceso Finalizado correctamente\nDesea crear una nueva cuenta?(S|N)").upper()
         nuevaC = True
@@ -137,9 +141,54 @@ def Ubicacion():
                 return ubicacion
             else:
                 print(f"Error, el dato ingresado en {i} es incorrecto")
-
+def CuentaPlata():
+    clr()
+    print("Para finalizar el proceso debe crear una cuenta de ahorros o corriente")
+    while True:
+        cuentas={}
+        str(input("Porfavor indique el tipo de cuenta que desea crear (Ahorros/Corriente/Ambas): ").upper())
+        match input: 
+            case "AHORROS":
+                id1= random.randint(100,999)
+                cu={{"AHORROS": id1,"SALDO":0}}
+                cuentas.update({1:cu})
+                input("Ha seleccionado una cuenta de ahorros\nOprima una tecla para continuar")
+                return cuentas
+            case "CORRIENTE":
+                id1= random.randint(100,999)
+                cu={{"CORRIENTE": id1,"SALDO":0}}
+                cuentas.update({1:cu})
+                input("Ha seleccionado una cuenta corriente\nOprima una tecla para continuar")
+                return cuentas
+            case "AMBAS":
+                id1= int(random.randint(100,999))
+                id2= int(random.randint(100,999))
+                if id1 == id2:
+                    id2= int(random.randint(100,999))
+                else:
+                    pass
+                cu1 = {"AHORROS": id1,"SALDO":0}
+                cu2 = {"CORRIENTE": id2,"SALDO":0}
+                cuentas.update({1:cu1, 2:cu2})
+                input("Ha seleccionado ambas cuentas\nOprima una tecla para continuar")
+                return cuentas
+            case _:
+                input("Opcion no valida\nOprima una tecla para continuar")
 def Depositar():
+    global usuarios
+    idfcc=str(input("Para hacer un deposito porfavor ingrese el numero de cedula de su cuenta"))
+    for i, cc in usuarios.items:
+        if idfcc == cc.get("CC"):
+            cu=usuarios.get("CUENTAS") 
+            print(f"La cedula se encuentra registrada, y estas son las cuentas asociadas a dicha cedula:{cu}")
+        else:
+            pass
+    idf=str(input("Ahora porfavor ingrese el numero de la cuenta a la que desea depositarle el dinero"))
+    montoD=int(input("Ahora porfavor ingrese el monto que dese depositar en la cuenta"))
+    for i, cuent in usuarios.items:
+        if idf == cuent.items:
     pass
+
 def SolicitarProducto(): 
     pass 
 def Pagodesaldo():
